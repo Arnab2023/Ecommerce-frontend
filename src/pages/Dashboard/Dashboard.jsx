@@ -137,81 +137,58 @@ function Dashboard() {
     },
   ];
   return (
-    <div className="outer-container">
-      <Sidebar opt={1} />
-      <div className="inner-container">
-        <SearchBar />
-        <div className="badgetext">
-          {/* <Grid numItemsSm={2} numItemsLg={4} className="gap-4"> */}
-          <div className="grid lg:grid-cols-4  sm:grid-cols-1 gap-6">
-            {categories.map((item) => (
-              <Card key={item.title} className="m-4 mt-10 w-70">
-                <Text>{item.title}</Text>
-                <Flex
-                  justifyContent="start"
-                  alignItems="baseline"
-                  className="truncate space-x-3"
-                >
-                  <Metric>{item.metric}</Metric>
+    <div className="inner-container">
+      <SearchBar />
+      <div className="badgetext">
+        {/* <Grid numItemsSm={2} numItemsLg={4} className="gap-4"> */}
+        <div className="grid lg:grid-cols-4  sm:grid-cols-1 gap-6">
+          {categories.map((item) => (
+            <Card key={item.title} className="m-4 mt-10 w-70">
+              <Text>{item.title}</Text>
+              <Flex
+                justifyContent="start"
+                alignItems="baseline"
+                className="truncate space-x-3"
+              >
+                <Metric>{item.metric}</Metric>
 
-                  <Text className="truncate">from {item.metricPrev}</Text>
+                <Text className="truncate">from {item.metricPrev}</Text>
+              </Flex>
+              <Flex justifyContent="start" className="space-x-2 mt-4">
+                <BadgeDelta deltaType={item.deltaType} />
+                <Flex justifyContent="start" className="space-x-1 truncate">
+                  <Text color={colors[item.deltaType]}>{item.delta}</Text>
+                  <Text className="truncate">to previous month</Text>
                 </Flex>
-                <Flex justifyContent="start" className="space-x-2 mt-4">
-                  <BadgeDelta deltaType={item.deltaType} />
-                  <Flex justifyContent="start" className="space-x-1 truncate">
-                    <Text color={colors[item.deltaType]}>{item.delta}</Text>
-                    <Text className="truncate">to previous month</Text>
-                  </Flex>
-                </Flex>
-              </Card>
-            ))}
-            <div className="out-cont   row-span-2 h-80 p-4 mt-10 mr-4  tremor-Card-root relative text-left ring-1 rounded-tremor-default p-6 bg-tremor-background ring-tremor-ring shadow-tremor-card dark:bg-dark-tremor-background dark:ring-dark-tremor-ring dark:shadow-dark-tremor-card border-tremor-brand dark:border-dark-tremor-brand        ">
-              <Title className="text-black">Sales</Title>
-              <div className="charts flex  flex-col items-center justify-center">
-                <DonutChart
-                  className="mt-4"
-                  data={cities}
-                  category="sales"
-                  index="name"
-                  colors={[
-                    "slate",
-                    "violet",
-                    "indigo",
-                    "rose",
-                    "cyan",
-                    "amber",
-                  ]}
-                />
-              </div>
-            </div>
-
-            <Card className=" bar-cont col-span-3">
-              <Title>Closed Pull Requests</Title>
-              <BarChart
-                className="mt-6"
-                data={chartdata3}
-                index="date"
-                categories={["2022", "2023"]}
-                colors={["neutral", "indigo"]}
-                yAxisWidth={20}
-                onValueChange={(v) => setValue(v)}
-              />
+              </Flex>
             </Card>
+          ))}
+          <div className="out-cont   row-span-2 h-80 p-4 mt-10 mr-4  tremor-Card-root relative text-left ring-1 rounded-tremor-default p-6 bg-tremor-background ring-tremor-ring shadow-tremor-card dark:bg-dark-tremor-background dark:ring-dark-tremor-ring dark:shadow-dark-tremor-card border-tremor-brand dark:border-dark-tremor-brand        ">
+            <Title className="text-black">Sales</Title>
+            <div className="charts flex  flex-col items-center justify-center">
+              <DonutChart
+                className="mt-4"
+                data={cities}
+                category="sales"
+                index="name"
+                colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
+              />
+            </div>
           </div>
-          {/* </Grid> */}
-        </div>
-        {/* <div className="donut-chart">
-          <Card className="max-w-60">
-            <Title>Sales</Title>
-            <DonutChart
-              className="mt-4 w-60"
-              data={cities}
-              category="sales"
-              index="name"
-              colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
+
+          <Card className=" bar-cont col-span-3">
+            <Title>Closed Pull Requests</Title>
+            <BarChart
+              className="mt-6"
+              data={chartdata3}
+              index="date"
+              categories={["2022", "2023"]}
+              colors={["neutral", "indigo"]}
+              yAxisWidth={20}
+              onValueChange={(v) => setValue(v)}
             />
           </Card>
-        </div> */}
+        </div>
       </div>
     </div>
   );

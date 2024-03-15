@@ -127,6 +127,7 @@ label {
 .dropzone {
   display: flex;
   margin-left: 50px;
+  gap: 20px;
 }
 .Container {
   display: flex;

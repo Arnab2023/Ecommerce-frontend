@@ -34,7 +34,7 @@ function Products() {
         const { data } = await axios.get(
           "https://ecommerce-back-end-orpin.vercel.app/api/products/all"
         );
-        console.log("getData",data);
+        console.log("getData", data);
         setOdata(data);
         setPData(data);
       } catch (e) {
@@ -125,83 +125,79 @@ function Products() {
   //--------------------------------------------- return statement-------------------------------//
 
   return (
-    <div className="Container">
-      <Sidebar opt={2} />
-      <div className="container-prod">
-        <SearchBar />
-        <NavLink to="/addproduct">
-          <button>
-            Add Product
-          </button>
-        </NavLink>
+    <div className="container-prod">
+      <SearchBar />
+      <NavLink to="/addproduct">
+        <button>Add Product</button>
+      </NavLink>
 
-        {/* --------------------------Filters---------------------------------- */}
-        {pData.length > 0 ? (
-          <>
-            {" "}
-            <div className="filter">
-              <select
-                name="filter-search"
-                id="filter"
-                value={stock}
-                onChange={(e) => {
-                  setStock(e.target.value);
-                }}
-              >
-                <option value="all">Stock Details</option>
+      {/* --------------------------Filters---------------------------------- */}
+      {pData.length > 0 ? (
+        <>
+          {" "}
+          <div className="filter">
+            <select
+              name="filter-search"
+              id="filter"
+              value={stock}
+              onChange={(e) => {
+                setStock(e.target.value);
+              }}
+            >
+              <option value="all">Stock Details</option>
 
-                <option value="in stock">In Stock</option>
-                <option value="out of stock"> Out of Stock</option>
-              </select>
+              <option value="in stock">In Stock</option>
+              <option value="out of stock"> Out of Stock</option>
+            </select>
 
-              <select
-                name="filter-search"
-                id="filter"
-                value={cat}
-                onChange={(e) => {
-                  setCat(e.target.value);
-                }}
-              >
-                <option value="all">Category</option>
-                {odata &&
-                  getUniqueData(odata, "categoryId")?.map((x) => (
-                    <option key={x.id} value={x}>
-                      <CategoryTableName id={x} />
-                    </option>
-                  ))}
-              </select>
+            <select
+              name="filter-search"
+              id="filter"
+              value={cat}
+              onChange={(e) => {
+                setCat(e.target.value);
+              }}
+            >
+              <option value="all">Category</option>
+              {odata &&
+                getUniqueData(odata, "categoryId")?.map((x) => (
+                  <option key={x.id} value={x}>
+                    <CategoryTableName id={x} />
+                  </option>
+                ))}
+            </select>
 
-              <select
-                name="filter-search"
-                id="filter"
-                value={brand}
-                onChange={(e) => {
-                  setBrand(e.target.value);
-                }}
-              >
-                <option value="all">Brand</option>
-                {odata &&
-                  getUniqueData(odata, "brand").map((x) => (
-                    <option key={x.id} value={x}>
-                      {x}
-                    </option>
-                  ))}
-              </select>
-            </div>
-            {/* --------------------------Products---------------------------------- */}
-            <div className="products">
-              <table>
-                <thead>
-                  <tr>
-                    <th>PRODUCT</th>
-                    <th>BRAND</th>
-                    <th>CATEGORY</th>
-                    <th>STOCK</th>
-                    <th>PRICE</th>
-                    <th>QTY</th>
-                  </tr>
-                </thead>
-                <tbody>
+            <select
+              name="filter-search"
+              id="filter"
+              value={brand}
+              onChange={(e) => {
+                setBrand(e.target.value);
+              }}
+            >
+              <option value="all">Brand</option>
+              {odata &&
+                getUniqueData(odata, "brand").map((x) => (
+                  <option key={x.id} value={x}>
+                    {x}
+                  </option>
+                ))}
+            </select>
+          </div>
+          {/* --------------------------Products---------------------------------- */}
+          <div className="products">
+            <table>
+              <thead>
+                <tr>
+                  <th>PRODUCT</th>
+                  <th>BRAND</th>
+                  <th>CATEGORY</th>
+                  <th>STOCK</th>
+                  <th>PRICE</th>
+                  <th>QTY</th>
+                </tr>
+              </thead>
+              <tbody>
                 <>
                   {pData
                     ?.slice((pagination - 1) * 10, (pagination - 1) * 10 + 10)
@@ -234,23 +230,22 @@ function Products() {
                       </tr>
                     ))}
                 </>
-                </tbody>
-              </table>
-            </div>
-          </>
-        ) : (
-          <div className="loader">
-            <img src={loader} alt="" />{" "}
+              </tbody>
+            </table>
           </div>
-        )}
+        </>
+      ) : (
+        <div className="loader">
+          <img src={loader} alt="" />{" "}
+        </div>
+      )}
 
-        <Pagination
-          className="pagination"
-          count={count}
-          color="primary"
-          onChange={handleChange}
-        ></Pagination>
-      </div>
+      <Pagination
+        className="pagination"
+        count={count}
+        color="primary"
+        onChange={handleChange}
+      ></Pagination>
     </div>
   );
 }

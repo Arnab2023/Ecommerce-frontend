@@ -80,84 +80,81 @@ function Transactions() {
   // return statements
 
   return (
-    <div className="Container">
-      <Sidebar opt={6} />
-      <div className="container-prod">
-        <SearchBar />
-        <div className="filter">
-          <select
-            name="filter-search"
-            id="filter"
-            value={payment}
-            onChange={(e) => {
-              setPayment(e.target.value);
-            }}
-          >
-            <option value="all">Payment Status</option>
-            <option value="Paid">Paid</option>
-            <option value="Pend">Pending</option>
-            <option value="Cancelled"> Cancelled</option>
-            <option value="Failed">Failed</option>
-          </select>
+    <div className="container-prod">
+      <SearchBar />
+      <div className="filter">
+        <select
+          name="filter-search"
+          id="filter"
+          value={payment}
+          onChange={(e) => {
+            setPayment(e.target.value);
+          }}
+        >
+          <option value="all">Payment Status</option>
+          <option value="Paid">Paid</option>
+          <option value="Pend">Pending</option>
+          <option value="Cancelled"> Cancelled</option>
+          <option value="Failed">Failed</option>
+        </select>
 
-          <select
-            name="filter-search"
-            id="filter"
-            value={mode}
-            onChange={(e) => {
-              setMode(e.target.value);
-            }}
-          >
-            <option value="all">Mode of Payment</option>
-            {getUniqueData(data, "mode_of_payment").map((x) => (
-              <option key={x.id} value={x}>
-                {x}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="transactions">
-          <table>
-            <tr>
-              <th>ORDER ID</th>
-              <th>CUSTOMER</th>
-              <th>DATE</th>
-              <th>PAYMENT</th>
-
-              <th>MODE OF PAYMENT</th>
-            </tr>
-            <>
-              {tdata
-                .slice((pagination - 1) * 10, (pagination - 1) * 10 + 10)
-                ?.map((item) => (
-                  <tr key={item.id}>
-                    <td className="center">{item.id}</td>
-                    <td
-                      className="pname"
-                      onClick={() => {
-                        navigate(`/userdetails/${item.id}`);
-                      }}
-                    >
-                      {item.name}
-                    </td>
-                    <td>{item.date}</td>
-                    <td>
-                      <UserStatus status={item.payment.toLowerCase()} />
-                    </td>
-                    <td className="center">{item.mode_of_payment}</td>
-                  </tr>
-                ))}
-            </>
-          </table>
-        </div>
-        <Pagination
-          className="pagination"
-          count={count}
-          color="primary"
-          onChange={handleChange}
-        ></Pagination>
+        <select
+          name="filter-search"
+          id="filter"
+          value={mode}
+          onChange={(e) => {
+            setMode(e.target.value);
+          }}
+        >
+          <option value="all">Mode of Payment</option>
+          {getUniqueData(data, "mode_of_payment").map((x) => (
+            <option key={x.id} value={x}>
+              {x}
+            </option>
+          ))}
+        </select>
       </div>
+
+      <div className="transactions">
+        <table>
+          <tr>
+            <th>ORDER ID</th>
+            <th>CUSTOMER</th>
+            <th>DATE</th>
+            <th>PAYMENT</th>
+
+            <th>MODE OF PAYMENT</th>
+          </tr>
+          <>
+            {tdata
+              .slice((pagination - 1) * 10, (pagination - 1) * 10 + 10)
+              ?.map((item) => (
+                <tr key={item.id}>
+                  <td className="center">{item.id}</td>
+                  <td
+                    className="pname"
+                    onClick={() => {
+                      navigate(`/userdetails/${item.id}`);
+                    }}
+                  >
+                    {item.name}
+                  </td>
+                  <td>{item.date}</td>
+                  <td>
+                    <UserStatus status={item.payment.toLowerCase()} />
+                  </td>
+                  <td className="center">{item.mode_of_payment}</td>
+                </tr>
+              ))}
+          </>
+        </table>
+      </div>
+      <Pagination
+        className="pagination"
+        count={count}
+        color="primary"
+        onChange={handleChange}
+      ></Pagination>
     </div>
   );
 }

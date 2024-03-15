@@ -9,7 +9,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import PaidIcon from "@mui/icons-material/Paid";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import "./style.css";
-import { useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 function Sidebar({ opt }) {
   // const [clicked, setClicked] = useState(1);
@@ -18,7 +18,7 @@ function Sidebar({ opt }) {
   const navigate = useNavigate();
 
   return (
-    <>
+    <div className="Container">
       {!display ? (
         <div className="sidebar">
           <div className="sidebarItems">
@@ -33,76 +33,35 @@ function Sidebar({ opt }) {
             </div>
 
             <div className="sidebarItem">
-              <button
-                className={option == 1 ? "clicked" : "normal"}
-                onClick={() => {
-                  setOption(1);
-                  // setClicked(1);
-                  navigate("/");
-                }}
-              >
-                <div className="icons">
-                  <HomeIcon />
-                </div>
-                Dashboard
-              </button>
+              <NavLink to="/" className="link">
+                <HomeIcon />
+                <p>Dashboard</p>
+              </NavLink>
             </div>
             <div className="sidebarItem">
-              <button
-                className={option == 2 ? "clicked" : "normal"}
-                onClick={() => {
-                  setOption(2);
-                  navigate("/products");
-                }}
-              >
-                <div className="icons">
-                  <ShoppingBagIcon />
-                </div>
-                Products
-              </button>
+              <NavLink to="/products" className="link">
+                <ShoppingBagIcon />
+                <p>Products</p>
+              </NavLink>
             </div>
             <div className="sidebarItem">
-              <button
-                className={option == 4 ? "clicked" : "normal"}
-                onClick={() => {
-                  setOption(4);
-                  navigate("/categories");
-                }}
-              >
-                <div className="icons">
-                  <ListIcon className=" icons" />
-                </div>
-                Categories
-              </button>
+              <NavLink to="/categories" className="link">
+                <ListIcon />
+                <p>Categories</p>
+              </NavLink>
             </div>
             <div className="sidebarItem">
-              <button
-                className={option == 5 ? "clicked" : "normal"}
-                onClick={() => {
-                  setOption(5);
-                  navigate("/users");
-                }}
-              >
-                <div className="icons">
-                  <GroupIcon className=" icons" />
-                </div>
-                Subscribers
-              </button>
+              <NavLink to="/users" className="link">
+                <GroupIcon />
+
+                <p>Subscribers</p>
+              </NavLink>
             </div>
             <div className="sidebarItem">
-              <button
-                className={option == 6 ? "clicked" : "normal"}
-                onClick={() => {
-                  setOption(6);
-                  navigate("/transactions");
-                }}
-              >
-                {" "}
-                <div className="icons">
-                  <PaidIcon className=" icons" />
-                </div>
-                Transactions
-              </button>
+              <NavLink to="/transactions" className="link">
+                <PaidIcon />
+                <p>Transactions</p>
+              </NavLink>
             </div>
           </div>
         </div>
@@ -196,7 +155,8 @@ function Sidebar({ opt }) {
           </div>
         </div>
       )}
-    </>
+      <Outlet />
+    </div>
   );
 }
 

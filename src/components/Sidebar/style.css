@@ -49,12 +49,37 @@
   align-items: center;
 }
 
+.active {
+  background-color: #5d5ea8 !important;
+  outline: none;
+}
+
+.link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px 10px;
+  margin: 5px 0px;
+  gap: 5px;
+  background-color: #35365f;
+  border-radius: 10px;
+}
+
+.link svg {
+  font-size: 28px;
+}
+
+.link p {
+  font-size: 22px;
+  font-weight: 500;
+}
+
 .sidebarItem .normal:hover {
   background-color: #35365f;
   outline: none;
 }
 
-.sidebarItem button {  
+.sidebarItem button {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   outline: none;
