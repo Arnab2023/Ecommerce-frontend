@@ -27,31 +27,50 @@ const Dropzone = ({ image, setImage }) => {
   });
 
   return (
-    <div className="dropzone" {...getRootProps()}>
-      <input {...getInputProps()} />
-      {selectedFile ? (
-        <>
-          <div className="delete-btn">
-            <DeleteOutlineIcon
+    <>
+      <div
+        {...getRootProps()}
+        style={{
+          position: "relative",
+          border: "2px dashed #cccccc",
+          width: "180px",
+          height: "180px",
+          borderRadius: "4px",
+          padding: "5px",
+          textAlign: "center",
+          cursor: "pointer",
+          background: isDragActive ? "#fafafa" : "#ffffff",
+        }}
+      >
+        <input {...getInputProps()} />
+        {selectedFile ? (
+          <>
+            <button
               onClick={() => {
                 setSelectedFile(null);
               }}
+              className="delbtn"
+            >
+              <DeleteOutlineIcon />
+            </button>
+            <img
+              src={URL.createObjectURL(selectedFile)}
+              alt="Selected"
+              style={{
+                zIndex: "-1",
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
             />
-          </div>
-          <img
-            src={URL.createObjectURL(selectedFile)}
-            alt="Selected"
-            className="selected-image"
-          />
-        </>
-      ) : (
-        <p className="drop-text">
-          {isDragActive
-            ? "Drop the image here"
-            : "Drag and drop an image here, or click to select one"}
-        </p>
-      )}
-    </div>
+          </>
+        ) : (
+          <p className="drop-text">
+            Drag and drop an image here, or click to select one
+          </p>
+        )}
+      </div>
+    </>
   );
 };
 

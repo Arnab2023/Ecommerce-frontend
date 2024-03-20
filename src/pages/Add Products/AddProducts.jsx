@@ -8,6 +8,7 @@ import axios from "axios";
 import Dropzone from "../../components/Dropzone/Dropzone";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { BASE_HOST } from "../../Api";
 
 function AddProducts() {
   const [title, setTitle] = useState();
@@ -21,29 +22,31 @@ function AddProducts() {
   const [categories, setCategories] = useState();
   const navigate = useNavigate();
   const [cookies] = useCookies(["access_token"]);
+  const [colour, setColour] = useState();
+  const [size, setSize] = useState();
 
-  const handleFetchCategories = async () => {
-    await axios
-      .get("https://ecommerce-back-end-orpin.vercel.app/api/category/all")
-      .then((res) => {
-        setCategories(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const handleFetchCategories = async () => {
+  //   await axios
+  //     .get("https://ecommerce-back-end-orpin.vercel.app/api/category/all")
+  //     .then((res) => {
+  //       setCategories(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
-  useEffect(() => {
-    handleFetchCategories();
-  }, []);
+  // useEffect(() => {
+  //   handleFetchCategories();
+  // }, []);
 
-  useEffect(() => {
-    if (categories) {
-      if (categories.length !== 0) {
-        setCategoryId(categories[0]._id);
-      }
-    }
-  }, [categories]);
+  // useEffect(() => {
+  //   if (categories) {
+  //     if (categories.length !== 0) {
+  //       setCategoryId(categories[0]._id);
+  //     }
+  //   }
+  // }, [categories]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,51 +58,57 @@ function AddProducts() {
       retailPrice: retail,
       categoryId,
       description,
-      product_image: image,
+      images: image,
       stock_qty: quantity,
+      colour,
+      size,
     };
 
     // Call the createProduct function to send the data to the backend
-    // await createProduct(productData);
-    navigate("/products");
+    await createProduct(productData);
+    // navigate("/products");
   };
 
-  // const createProduct = async (productData) => {
-  //   try {
-  //     console.log(cookies.access_token);
-  //     const apiUrl = "https://ecommerce-back-end-orpin.vercel.app/api/products"; //https:ecommerce-back-end-orpin.vercel.app/api/products/
-  //     const relativeUrl = "/secure/";
+  const createProduct = async (productData) => {
+    try {
+      console.log(cookies.access_token);
+      const apiUrl = `${BASE_HOST}/api/products`; //https:ecommerce-back-end-orpin.vercel.app/api/products/
+      const relativeUrl = "/secure/";
 
-  //     const headers = {
-  //       Authorization: `Bearer ${cookies.access_token}`,
-  //       "Content-Type": "multipart/form-data",
-  //     };
+      const headers = {
+        Authorization: `Bearer ${cookies.access_token}`,
+        "Content-Type": "multipart/form-data",
+      };
 
-  //     const formData = new FormData();
-  //     formData.append("name", productData.name);
-  //     formData.append("brand", productData.brand);
-  //     formData.append("description", productData.description);
-  //     formData.append("purchasePrice", productData.purchasePrice);
-  //     formData.append("retailPrice", productData.retailPrice);
-  //     formData.append("categoryId", productData.categoryId);
-  //     formData.append("brand", productData.brand);
-  //     formData.append("stock_qty", productData.stock_qty);
-  //     formData.append("product_image", productData.product_image);
-  //     console.log(formData);
+      const formData = new FormData();
+      formData.append("name", productData.name);
+      formData.append("brand", productData.brand);
+      formData.append("description", productData.description);
+      formData.append("purchasePrice", productData.purchasePrice);
+      formData.append("retailPrice", productData.retailPrice);
+      formData.append("categoryId", productData.categoryId);
+      formData.append("brand", productData.brand);
+      formData.append("stock_qty", productData.stock_qty);
+      formData.append("size", productData.size);
+      formData.append("images", productData.images);
 
-  //     const response = await axios.post(`${apiUrl}${relativeUrl}`, formData, {
-  //       headers,
-  //     });
+      formData.append("colour", productData.colour);
+      console.log(formData);
 
-  //     console.log("Product created successfully:", response.data);
-  //     // Handle success or perform additional actions as needed
-  //   } catch (error) {
-  //     console.error("Error creating product:", error);
-  //     console.log(productData);
+      const response = await axios.post(`${apiUrl}${relativeUrl}`, formData, {
+        "Content-Type": "multipart/form-data",
+      });
 
-  //     // Handle error or display an error message to the user
-  //   }
-  // };
+      console.log("Product created successfully:", response.data);
+      // Handle success or perform additional actions as needed
+    } catch (error) {
+      console.error("Error creating product:", error);
+      console.log(productData);
+
+      // Handle error or display an error message to the user
+    }
+  };
+
   useEffect(() => {
     console.log(image);
   }, [image]);
@@ -142,6 +151,34 @@ function AddProducts() {
                 id="brand"
                 name="brand"
                 placeholder="Enter Brand Name"
+              />
+            </div>
+            <div className="form-group colour-group">
+              <label htmlFor="colour">Colour</label>
+              <input
+                onChange={(e) => {
+                  setColour(e.target.value);
+                }}
+                value={colour}
+                className="form-control colour-inp"
+                type="text"
+                id="colour"
+                name="colour"
+                placeholder="Enter the colour of the product"
+              />
+            </div>
+            <div className="form-group size-group">
+              <label htmlFor="size">Size</label>
+              <input
+                onChange={(e) => {
+                  setSize(e.target.value);
+                }}
+                value={size}
+                className="form-control size-inp"
+                type="text"
+                id="size"
+                name="size"
+                placeholder="Enter the size"
               />
             </div>
             <div className="form-group buying-group">

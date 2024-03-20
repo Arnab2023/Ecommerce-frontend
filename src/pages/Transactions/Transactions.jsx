@@ -17,6 +17,7 @@ function Transactions() {
   const [mode, setMode] = useState(null);
   const [tdata, setTdata] = useState(data);
   const [pagination, setPagination] = useState(1);
+  const [noProd, setnoProd] = useState();
 
   const [count, setCount] = useState();
 
@@ -115,23 +116,25 @@ function Transactions() {
         </select>
       </div>
 
-      <div className="transactions">
+      <div className="products">
         <table>
-          <tr>
-            <th>ORDER ID</th>
-            <th>CUSTOMER</th>
-            <th>DATE</th>
-            <th>PAYMENT</th>
-
-            <th>MODE OF PAYMENT</th>
-          </tr>
-          <>
+          <thead>
+            <tr>
+              <th>ORDER ID</th>
+              <th>CUSTOMER</th>
+              <th>DATE</th>
+              <th> PAYMENT</th>
+              <th>MODE OF PAYMENT</th>
+            </tr>
+          </thead>
+          <tbody>
             {tdata
               .slice((pagination - 1) * 10, (pagination - 1) * 10 + 10)
               ?.map((item) => (
                 <tr key={item.id}>
                   <td className="center">{item.id}</td>
                   <td
+                    style={{ cursor: "pointer" }}
                     className="pname"
                     onClick={() => {
                       navigate(`/userdetails/${item.id}`);
@@ -146,8 +149,9 @@ function Transactions() {
                   <td className="center">{item.mode_of_payment}</td>
                 </tr>
               ))}
-          </>
+          </tbody>
         </table>
+        <div className="no-prod">{noProd}</div>
       </div>
       <Pagination
         className="pagination"
